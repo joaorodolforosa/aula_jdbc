@@ -3,8 +3,7 @@ package br.uam.psc.program;
 import br.uam.psc.db.DB;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -15,16 +14,14 @@ public class Application {
     public static void main(String[] args) throws SQLException {
 
         /*
-        Utiliza o método getConnection de DB para iniciar uma conexão com o banco
+         * Utiliza o método getConnection de DB para iniciar uma conexão com o banco
          */
-        Connection conexao = DB.getConnection();
-        // instancia um objeto Statement para as instruções SQL
-        Statement statement = conexao.createStatement();
-        // representa o conjunto de resultados da instrução SQL
-        ResultSet comanda = statement.executeQuery("SELECT * FROM comanda_tb");
-        while (comanda.next()) {
-            System.out.println(comanda.getInt("qtd") + ", " + comanda.getString("descricao") + ", " + comanda.getDouble("valor"));
-        }
+        Connection conexao = DB.getConnection(); 
+        
+        // utiliza uma instrução pré-compilada PreparedStatement
+        PreparedStatement delecao = conexao.prepareStatement("DELETE FROM comanda_tb WHERE id = ?");
+        delecao.setInt(1, 3);
+        delecao.executeUpdate();
         
     }
     
