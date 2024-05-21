@@ -18,14 +18,17 @@ public class Application {
          */
         Connection conexao = DB.getConnection();
         
-        String sql = "INSERT INTO comanda_tb (qtd, descricao, valor) "
-                + "VALUES (?, ?, ?)";
-        PreparedStatement inserir = conexao.prepareStatement(sql);
-        inserir.setInt(1, 2);
-        inserir.setString(2, "Polenta");
-        inserir.setDouble(3, 20.0);
-        inserir.executeUpdate();
-        
+        String sql = "UPDATE comanda_tb SET "
+                + "qtd = ?, "
+                + "descricao = ?, "
+                + "valor = ?"
+                + "WHERE id = ?";
+        PreparedStatement update = conexao.prepareStatement(sql);
+        update.setInt(1, 1);
+        update.setString(2, "Caipirinha de vodka");
+        update.setDouble(3, 35.0);
+        update.setInt(4, 2);
+        update.executeUpdate();
         
     }
     
