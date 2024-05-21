@@ -16,12 +16,16 @@ public class Application {
         /*
          * Utiliza o método getConnection de DB para iniciar uma conexão com o banco
          */
-        Connection conexao = DB.getConnection(); 
+        Connection conexao = DB.getConnection();
         
-        // utiliza uma instrução pré-compilada PreparedStatement
-        PreparedStatement delecao = conexao.prepareStatement("DELETE FROM comanda_tb WHERE id = ?");
-        delecao.setInt(1, 3);
-        delecao.executeUpdate();
+        String sql = "INSERT INTO comanda_tb (qtd, descricao, valor) "
+                + "VALUES (?, ?, ?)";
+        PreparedStatement inserir = conexao.prepareStatement(sql);
+        inserir.setInt(1, 2);
+        inserir.setString(2, "Polenta");
+        inserir.setDouble(3, 20.0);
+        inserir.executeUpdate();
+        
         
     }
     
